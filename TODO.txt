@@ -1,0 +1,14 @@
+API Projects
+1. Minim 3 request-uri diferite.
+3. Functie de sortare / cautare JS
+
+
+4. Pagina de about trebuie sa contina informatii despre proiect, poze, detalii
+de implementare, exemple de cod (cu casute de cod pentru copy & paste)
+
+
+5. Proiectul trebuie sa fie stocat pe GitHub / GitHub pages
+6. Trebuie sa fie commit-uri individuale cu functionalitate, nu poate fi un singur commit.
+
+
+https://www.omdbapi.com/

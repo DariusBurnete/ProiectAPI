@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <title>MDB</title>
+</head>
+<body>
+    
+<div class="header">
+    <nav>
+        <div class="name">
+            <a href="/">MDB</a>
+        </div>
+        <ul>
+            <li><a href="/list" id="<%= locals.activePage === 'list' ? 'active' : '' %>" >List</a></li>
+            <li><a href="/sort" id="<%= locals.activePage === 'sort' ? 'active' : '' %>">Sort</a></li>
+            <li><a href="/search" id="<%= locals.activePage === 'search' ? 'active' : '' %>">Search</a></li>
+            <li><a href="/about" id="<%= locals.activePage === 'about' ? 'active' : '' %>">About</a></li>
+        </ul>
+    </nav>
+</div>

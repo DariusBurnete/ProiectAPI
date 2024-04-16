@@ -1,0 +1,104 @@
+a, li{
+    text-decoration: none;
+    list-style: none;
+    cursor: pointer;
+    color: white;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-image: url('../assets/vRs0PSJL-wallha.com.jpg'); 
+    background-size: cover;                         
+    background-repeat: no-repeat; 
+    color: white;
+    overflow: hidden;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/vRs0PSJL-wallha.com.jpg'); 
+    background-size: cover;
+    filter: grayscale(100%);
+    z-index: -10; 
+}
+
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.452);
+    z-index: -9;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5% 10%;
+    background-color: #00000077;
+    padding: 0 2%;
+    border-radius: 1rem;
+}
+
+nav > ul{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 45%;
+    padding: 0;
+}
+
+.name{
+    font-size: 1.6em;
+    font-weight: 600;
+}
+
+nav > ul > li > a:hover{
+    transition: 1s;
+    color: #ED1D24;
+}
+
+#active{
+    color: #ED1D24;
+}
+
+nav > ul > li > a, .desc > p{
+    font-size: 1.2em;
+    font-weight: 500;
+    transition: 1s;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 12% 30%;
+    padding: 1.5% 3%;
+    border-radius: 1rem;
+    background-color: #ED1D24BB;
+}
+
+.content > h1{
+    border-bottom: white 1px solid;
+    padding-bottom: 5%;
+}
+
+.desc{
+    line-height: 2rem;
+    word-spacing: .2rem;
+    margin: 0 2%;
+}
+
+.desc, .content > h1{
+    text-align: center;
+}
