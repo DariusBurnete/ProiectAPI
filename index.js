@@ -1,8 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import axios from 'axios';
+import env from 'dotenv';
+
+env.config();
 
 const app = express();
 const port = 3000;
+const apiKey = process.env.API_KEY;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -11,8 +16,22 @@ app.get('/', (req, res) => {
     res.render("index.ejs");
 });
 
-app.get('/list', (req, res) =>{
-    res.render("list.ejs", {activePage: 'list'});
+app.get('/list', async(req, res) =>{
+    let movies = [];
+    try{
+        let page = 1;
+        let response;
+        do {
+            response = await axios.get(
+                `http://www.omdbapi.com/?s=movie&page=${page}&apikey=${apiKey}`
+            );
+            movies = movies.concat(response.data.Search || []);
+            page++;
+        } while (response.data.Search && response.data.Search.length !== 0 && page <= 80);
+        res.render("list.ejs", {activePage: 'list', movies});
+    } catch (error){
+        console.error(error);
+    }
 });
 
 app.get('/sort', (req, res) =>{

@@ -1,7 +1,21 @@
+<%- include('partials/bodyProp_2.ejs') -%>
 <%- include('partials/header.ejs') -%>
 
 
-
+<ul>
+    <div class="list-container">
+        <% if(movies) { %>
+            <% movies.forEach(function(movie) { %>
+                    <div class="list-card">
+                        <a href="/movie">
+                            <img src="<%= movie.Poster %>">
+                            <li><%= movie.Title %></li>
+                        </a>
+                    </div>
+            <% }) %>
+        <% } %>
+    </div>
+</ul>
 
 
 <%- include('partials/footer.ejs') -%>
