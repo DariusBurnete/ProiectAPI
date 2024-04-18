@@ -69,13 +69,14 @@ nav > ul > li > a, .desc > p{
 }
 
 
+
 .list-container{
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin: 5% 0 0 4.4%;
+    margin: 5% 0 0 5.4%;
     padding: 0;
     width: 90%;
 }
@@ -103,4 +104,52 @@ nav > ul > li > a, .desc > p{
     font-size: 1.1em;
     text-align: center;
     width: 70%;
+}
+
+
+
+.sort-nav > form{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 31%;
+    padding: 1.2% 2%;
+    background-color: #00000077;
+    border-radius: 1rem;
+}
+
+.sort-nav{
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 10%;
+}
+
+.sort-nav > form > *{
+    cursor: pointer;
+    background-color: transparent;
+    font-size: 1.2em;
+    color: white;
+    border: none;
+}
+
+.sort-nav > form > input{
+    transition: .5s;
+    border: #ed1d2434 1px solid;
+}
+
+input::placeholder{
+    color: white;
+}
+
+input[type="text"]:focus{
+    transition: .5s;
+    border: #ED1D24 1px solid;
+}
+
+select:focus, input[type="text"]:focus{
+    outline: none;
+}
+
+.sort-nav > form > select > option{
+    color: #ed1d24;
 }
