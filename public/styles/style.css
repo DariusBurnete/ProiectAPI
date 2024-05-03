@@ -176,7 +176,7 @@ img {
 }
 .search-element {
     display: flex;
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
     flex-direction: column;
     position: relative;
@@ -184,11 +184,10 @@ img {
 
 .search-element h3 {
     align-self: center;
-    margin-right: 1rem;
+    margin: 0 1rem 1.5rem 0; 
     font-size: 2rem;
     color: var(--text-color);
     font-weight: 500;
-    margin-bottom: 1.5rem;
 }
 
 .search-element .form-control {
