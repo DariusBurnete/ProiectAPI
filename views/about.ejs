@@ -1,7 +1,257 @@
-<%- include('partials/bodyProp_1.ejs') -%>
+<%- include('partials/bodyProp_2.ejs') -%>
 <%- include('partials/header.ejs') -%>
 
+    <main class="about container">
+        <section class="row">
+            <h2 class="col-12">Project Overview</h2>
+            <p class="col-12">
+                This project is a movie database website created for a university
+                course about web technologies. The website uses the OMDb's API to
+                fetch movie data.
+            </p>
+        <div class="col-8 col-sm-8 col-md-6 col-lg-4 features">
+            <div class="card bg-dark text-white border-light">
+                <div class="card-header">
+                    <div class="card-title">
+                        Feature 1: Movie Listing
+                    </div>
+                </div>
+                <div class="card-body">
+                    This feature allows users to view a list of movies stored in the 
+                    database. The movies displayed must be searched and sorted
+                    after words of 3 characters or more.
+                </div>
+            </div>
+            <div class="card bg-dark text-white border-light">
+                <div class="card-header">
+                    Feature 2: Sorting Movies
+                </div>
+                <div class="card-body">
+                    Users can sort the list of movies by criteria such as
+                    the type and year. This feature lets users organize movies,
+                    episodes and series.
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white border-light">
+                <div class="card-header">
+                    Feature 3: Searching for a Specific Movie
+                </div>
+                <div class="card-body">
+                    Users can search for a specific movie
+                    using the search bar. The search functionality supports 
+                    partial matches and returns a list of movies
+                    that closely match the search query.
+                </div>
+            </div>
+        </div>
+        </section>
+
+        <section class="row" id="implementation_details">
+            <h2 class="col-12">Implementation Details</h2>
+            <p class="col-12">
+                The MDB project is implemented using a combination of NodeJS for the backend and JavaScript for
+                the frontend. The frontend is built using a bit of Bootstrap, HTML, CSS, and
+                JS.
+                The project follows the Model-View-Controller (MVC) architectural pattern. The models define the data
+                structure, the views display the data, and the controller handles the communication between the models
+                and views.
+                <br>
+                One unique implementation strategy used in this project is the use of the OMDb's API to fetch real-time
+                movie data. This ensures that users always have access to the most recent and accurate information about
+                their favorite movies.
+            </p>
+
+            <h2 class="col-12">Code Examples</h2>
+            <div class="col-12 code-boxes">
+                <h6>Here are some key pieces of code used in the MDB project:</h6>
+
+                <strong>    1. Sorting Movies: </strong>
+
+                <div class="code-box" id="code1">
+                <pre>
+                    <code>
+let movies = [];
+const year = req.body.year;
+const type = req.body.type;
+try{
+    let page = 1;
+    let response;
+    do{
+        response = await axios.get(
+            `http://www.omdbapi.com/?s=man&y=${year}&page=${page}&type=${type}&apikey=${apiKey}`
+        );
+        movies = movies.concat(response.data.Search || []);
+        page++;
+    } while(response.data.Search && response.data.Search.length !== 0 && page <= 3);
+    res.render("sort.ejs", { activePage: "sort", movies });
+} catch (error){
+    console.error(error);
+}
+                    </code>
+                </pre>
+                </div>
+
+                <strong>2. Movie Listing:</strong>
+                <div class="code-box" id="code2">
+                <pre>
+                    <code>
+let movies = [];
+try{
+    let page = 1;
+    let response;
+    do {
+        response = await axios.get(
+            `http://www.omdbapi.com/?s=man&page=${page}&apikey=${apiKey}`
+        );
+        movies = movies.concat(response.data.Search || []);
+        page++;
+    } while (response.data.Search && response.data.Search.length !== 0 && page <= 80);
+    res.render("list.ejs", {activePage: "list", movies});
+} catch (error){
+    console.error(error);
+}
+                    </code>
+                </pre>
+                </div>
+
+                <strong>3. Movie Search:</strong>
+                <div class="code-box" id="code3">
+                <pre>
+                    <code>
+const movieSearchBox = document.getElementById('movie-search-box');
+const searchList = document.getElementById('search-list');
+const resultGrid = document.getElementById('result-grid');
+
+async function loadMovies(searchTerm){
+  const URL = `https://omdbapi.com/?s=${searchTerm}&page=1&apikey=152a4b77`;
+  const res = await fetch(`${URL}`);
+  const data = await res.json();
+  // console.log(data.Search);
+  if(data.Response == "True") displayMovieList(data.Search);
+}
+
+function findMovies(){
+  let searchTerm = (movieSearchBox.value).trim();
+  if(searchTerm.length > 0){
+      searchList.classList.remove('hide-search-list');
+      loadMovies(searchTerm);
+  } else {
+      searchList.classList.add('hide-search-list');
+  }
+}
+
+function displayMovieList(movies){
+  searchList.innerHTML = "";
+  for(let idx = 0; idx < movies.length; idx++){
+      let movieListItem = document.createElement('div');
+      movieListItem.dataset.id = movies[idx].imdbID; // setting movie id in  data-id
+      movieListItem.classList.add('search-list-item');
+      if(movies[idx].Poster != "N/A")
+          moviePoster = movies[idx].Poster;
+      else 
+          moviePoster = "image_not_found.png";
+
+      movieListItem.innerHTML = `
+      &lt;div class = "search-item-thumbnail">
+      &lt;img src = "${moviePoster}">  
+      &lt;/div>
+      &lt;div class = "search-item-info">
+      &lt;h3>${movies[idx].Title}&lt;/h3>
+      &lt;p>${movies[idx].Year}&lt;/p>
+      &lt;/div>
+      `;
+      searchList.appendChild(movieListItem);
+  }
+  loadMovieDetails();
+}
+
+function loadMovieDetails(){
+  const searchListMovies = searchList.querySelectorAll('.search-list-item');
+  searchListMovies.forEach(movie => {
+      movie.addEventListener('click', async () => {
+          // console.log(movie.dataset.id);
+          searchList.classList.add('hide-search-list');
+          movieSearchBox.value = "";
+          const result = await fetch(`http://www.omdbapi.com/?i=${movie.dataset.id}&apikey=152a4b77`);
+          const movieDetails = await result.json();
+          // console.log(movieDetails);
+          displayMovieDetails(movieDetails);
+      });
+  });
+}
+
+function displayMovieDetails(details){
+  resultGrid.innerHTML = `
+  
+  &lt;div class = "movie-poster">
+  &lt;img src = "${(details.Poster != "N/A") ? details.Poster : "image_not_found.png"}" alt = "movie poster">
+  &lt;/div>
+  &lt;div class = "movie-info">
+  &lt;h3 class = "movie-title">${details.Title}&lt;/h3>
+  &lt;ul class = "movie-misc-info">
+  &lt;li class = "year">Year: ${details.Year}&lt;/li>
+  &lt;li class = "rated">Ratings: ${details.Rated}&lt;/li>
+  &lt;li class = "released">Released: ${details.Released}&lt;/li>
+  &lt;/ul>
+  &lt;p class = "genre">&lt;b>Genre:&lt;/b> ${details.Genre}&lt;/p>
+  &lt;p class = "writer">&lt;b>Writer:&lt;/b> ${details.Writer}&lt;/p>
+  &lt;p class = "actors">&lt;b>Actors: &lt;/b>${details.Actors}&lt;/p>
+  &lt;p class = "plot">&lt;b>Plot:&lt;/b> ${details.Plot}&lt;/p>
+  &lt;p class = "language">&lt;b>Language:&lt;/b> ${details.Language}&lt;/p>
+  &lt;p class = "awards">&lt;b>&lt;i class = "fas fa-award">&lt;/i>&lt;/b> ${details.Awards}&lt;/p>
+  &lt;/div>
+  `;
+  resultGrid.parentElement.classList.add('search-result-background');
+}
 
 
+window.addEventListener('click', (event) => {
+  if(event.target.className != "form-control"){
+      searchList.classList.add('hide-search-list');
+  }
+});
+                    </code>
+                </pre>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="row" id="progress">
+            <h2 class="col-12">Project Progress</h2>
+            <p class="col-12">
+                Updates about the progress of the project, including completed
+                features and future plans.
+            </p>
+            <article class="update col-12">
+                <h3>Project Kickoff</h3>
+                <time datetime="2024-03-10">10/03/2024</time>
+                <p>
+                    Today marked the beginning of this project. At first, the basic
+                    outline for the page structure was defined in 3 sections as follows:
+                    Description, Implementation Details, and Updates.
+                </p>
+                <p>
+                    In the Description section, a brief overview of the project will be
+                    provided, explaining the purpose and functionality of the movie
+                    database website.
+                </p>
+                <p>
+                    The Implementation Details section will delve into the technical
+                    aspects of the project, discussing the technologies used, the
+                    structure of the code, and any unique implementation strategies.
+                </p>
+                <p>
+                    In the Updates section, a format was established to document the
+                    development journey. Each update will be presented as a distinct
+                    block, featuring a title, date, and a description of the changes
+                    made. This section will serve as a logbook, chronicling the progress
+                    of the project, and providing transparency on the development
+                    process.
+                </p>
+            </article>
+        </section>
+    </main>
 
 <%- include('partials/footer.ejs') -%>
