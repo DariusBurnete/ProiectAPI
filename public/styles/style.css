@@ -408,3 +408,37 @@ img {
 .search-result-background {
     background-color: var(--dark-color);
 }
+
+.about {
+    color:#ddd;
+
+}
+
+.about h2{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.about .features{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    height: auto;
+    margin: 0,10%,0,10%;
+}
+
+.about .col-md-6{
+    width: 100%;
+}
+
+.about .card{
+    margin: 10px;
+    border-radius: 10px;
+    height: 218.4px;
+    width: 325px;
+    overflow: hidden; 
+    background-color: rgba(255,255,255,0.1)!important;
+    background-blend-mode: lighten;
+    box-shadow: 0 10px 15px 0 rgba(0,0,0,0.3)!important;
+}

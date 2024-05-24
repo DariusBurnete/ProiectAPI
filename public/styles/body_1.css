@@ -5,6 +5,7 @@ body{
     background-image: url('../assets/vRs0PSJL-wallha.com.jpg'); 
     background-size: cover;                   
     color: white;
+    overflow: hidden;
 }
 
 body::before {
