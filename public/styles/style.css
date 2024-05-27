@@ -21,6 +21,7 @@ nav > ul{
     align-items: center;
     width: 45%;
     padding: 0;
+    margin-right: 25px;
 }
 
 .name{
@@ -360,6 +361,7 @@ img {
     .movie-misc-info li:nth-child(2){
         margin: 0.8rem 0;
     }
+
 }
 
 @media(min-width: 800px){
