@@ -42,17 +42,16 @@ app.get('/sort', (req, res) =>{
 app.post('/sort', async(req, res) =>{
     let movies = [];
     const year = req.body.year;
-    const type = req.body.type;
     try{
         let page = 1;
         let response;
         do{
             response = await axios.get(
-                `http://www.omdbapi.com/?s=man&y=${year}&page=${page}&type=${type}&apikey=${apiKey}`
+                `http://www.omdbapi.com/?s=man&y=${year}&page=${page}&apikey=${apiKey}`
             );
             movies = movies.concat(response.data.Search || []);
             page++;
-        } while(response.data.Search && response.data.Search.length !== 0 && page <= 3);
+        } while(response.data.Search && response.data.Search.length !== 0 && page <= 7);
         res.render("sort.ejs", { activePage: "sort", movies });
     } catch (error){
         console.error(error);

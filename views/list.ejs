@@ -6,10 +6,8 @@
     <% if(movies) { %>
         <% movies.forEach(function(movie) { %>
                 <div class="list-card">
-                    <a href="/movie">
-                        <img src="<%= movie.Poster %>">
-                        <li><%= movie.Title %></li>
-                    </a>
+                    <img src="<%= movie.Poster %>">
+                    <li><%= movie.Title %></li>
                 </div>
         <% }) %>
     <% } %>
